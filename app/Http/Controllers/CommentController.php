@@ -18,4 +18,16 @@ class CommentController extends Controller
 
         return back();
     }
+    public function replyStore(Request $request)
+    {
+        $reply = new Comment();
+
+        $reply->body = $request->get('comment_body');
+        
+        $reply->user()->associate($request->user());
+        $reply->parent_id = $request->get('comment_id');
+        $post = Post::find($request->get('post_id'));
+
+        $post->comments()->save($reply);
+    }
 }

@@ -1,8 +1,13 @@
 <!-- show.blade.php -->
 
 @extends('layouts.app')
-
+<style>
+    .display-comment .display-comment {
+        margin-left: 40px
+    }
+</style>
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -14,12 +19,7 @@
                     </p>
                     <hr />
                     <h4>Display Comments</h4>
-                    @foreach($post->comments as $comment)
-                        <div class="display-comment">
-                            <strong>{{ $comment->user->name }}</strong>
-                            <p>{{ $comment->body }}</p>
-                        </div>
-                    @endforeach
+                    @include('partials._comment_replies', ['comments' => $post->comments, 'post_id' => $post->id])
                     <hr />
                     <h4>Add comment</h4>
                     <form method="post" action="{{ route('comment.add') }}">
